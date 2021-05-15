@@ -7,7 +7,8 @@ import {Slider, SliderLabel} from "@progress/kendo-react-inputs";
 
 const user = {
   id: 1,
-  avatarUrl: "https://via.placeholder.com/24/008000/008000.png",
+  avatarUrl: "https://raw.githubusercontent.com/annaira/atlat-checkin-bot/main/src/atlat-theme/user_avater_100px.png",
+  //avatarUrl: "https://via.placeholder.com/24/008000/008000.png",
 };
 const bot = {
   id: 0,
