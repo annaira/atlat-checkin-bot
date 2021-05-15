@@ -3,6 +3,7 @@ import '@progress/kendo-theme-default/dist/all.css';
 import './App.scss';
 import {Chat} from "@progress/kendo-react-conversational-ui";
 import {Slider, SliderLabel} from "@progress/kendo-react-inputs";
+import {Button} from "@progress/kendo-react-buttons";
 
 const user = {
   id: 1,
@@ -144,10 +145,17 @@ const reply_array = [workYearQuestion, blanco, wageQuestion, blanco, overtimeQue
 
 const App = () => {
   const [messages, setMessages] = React.useState(initialMessages);
+  const [showToolbar, setShowToolbar] = React.useState(false);
 
   const addNewMessage = (event) => {
     const current_message = (messages.length-1);
 
+    // Check for toolbar
+    if (current_message == 12 || current_message == 13) {
+      setShowToolbar(true);
+    } else {
+      setShowToolbar(false);
+    }
     // Ask next question
     let botResponse = Object.assign({}, event.message);
     botResponse = reply_array[current_message];
@@ -157,12 +165,64 @@ const App = () => {
     }, 1000);
   };
 
+  const sliderStyle = {
+    width: '400px',
+    height: '32px'
+  };
+
+  const buttonStyle = {
+    "margin-left": '10px',
+    "margin-bottom": '20px',
+  }
+
+  const sliderButtonClick = (event) => {
+    let sliderResponse;
+    // Here the logic is missing to access the current value of the slider
+    sliderResponse = {
+      author: user,
+      timestamp: new Date(),
+      text: "Test",
+    };
+    setMessages([...messages, sliderResponse]);
+  }
+
+  const Toolbar = () => {
+    return (<span>
+            <Slider buttons={false} step={1} defaultValue={5} min={0} max={10} style={sliderStyle} >
+            <SliderLabel position={0}>0</SliderLabel>
+            <SliderLabel position={5}>5</SliderLabel>
+            <SliderLabel position={10}>10</SliderLabel>
+            </Slider>
+            <Button style={buttonStyle} icon="play" onClick={sliderButtonClick}></Button>
+          </span>);
+  };
+
+  // This function checks, if the normal message bar should be displayed
+  const customMessage = (props) => {
+    let result;
+    const current_message = (messages.length-1);
+
+    // Check for toolbar
+    if (current_message == 13 || current_message == 14) {
+      result = (<React.Fragment>
+                </React.Fragment>);
+    } else {
+      result = (<React.Fragment>
+                  {props.messageInput}
+                  {props.sendButton}
+                </React.Fragment>);
+    }
+    return (result);
+  };
+
+
   return (
       <Chat
           user={user}
           messages={messages}
           onMessageSend={addNewMessage}
           placeholder={"Type a message..."}
+          messageBox={customMessage}
           width={"100%"}
           style={{height: "100%", width: "100%", overflow: "hidden"}}
       />
