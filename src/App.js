@@ -14,8 +14,6 @@ const bot = {
   id: 0,
 };
 
-const reply_array = ["How many years are you old?","skip", "In which year did you start to work at the factory?", "skip"]
-
 
 const initialMessages = [
   {
@@ -35,7 +33,7 @@ const ageQuestion =
   {
   author: bot,
   timestamp: new Date(),
-  text: "How many years are you old?",
+  text: "How old are you (in years)?",
 };
 
 const safetyQuestion =
@@ -106,7 +104,7 @@ const genderQuestion =
     },
   ],
   timestamp: new Date(),
-  text: "What is your gender",
+  text: "What is your gender?",
 };
 
 const workYearQuestion =
@@ -144,7 +142,7 @@ const thankYou =
   text: "Thank you for helping us!",
 };
 
-const reply_array_new = [workYearQuestion, blanco, wageQuestion, blanco, overtimeQuestion, blanco, safetyQuestion, blanco, ageQuestion, blanco, genderQuestion, blanco, promoterQuestion, blanco, thankYou];
+const reply_array = [workYearQuestion, blanco, wageQuestion, blanco, overtimeQuestion, blanco, safetyQuestion, blanco, ageQuestion, blanco, genderQuestion, blanco, promoterQuestion, blanco, thankYou];
 
 
 
@@ -154,7 +152,7 @@ const App = () => {
   const addNewMessage = (event) => {
     const current_message = (messages.length-1);
     let botResponse = Object.assign({}, event.message);
-    botResponse = reply_array_new[current_message];
+    botResponse = reply_array[current_message];
 //    botResponse.text = reply_array[(messages.length-1)];
 //    botResponse.author = bot;
     setMessages([...messages, event.message]);
