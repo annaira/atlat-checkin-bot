@@ -3,6 +3,7 @@ import '@progress/kendo-theme-default/dist/all.css';
 import './App.css';
 import { Chat, HeroCard } from "@progress/kendo-react-conversational-ui";
 import { Calendar } from "@progress/kendo-react-dateinputs";
+import { Slider, SliderLabel } from "@progress/kendo-react-inputs";
 
 
 const user = {
@@ -62,11 +63,71 @@ const safetyQuestion =
   text: "How do you rate the physical safety at your workplace?",
 };
 
+const wageQuestion =
+  {
+  author: bot,
+  suggestedActions: [
+    {
+      type: "reply",
+      value: "yes",
+    },
+    {
+      type: "reply",
+      value: "not on time",
+    },
+    {
+      type: "reply",
+      value: "not in full",
+    },
+    {
+      type: "reply",
+      value: "neither in full nor on time",
+    },
+  ],
+  timestamp: new Date(),
+  text: "Have you always been paid your wages on time and in full in the last three months?",
+};
+
+const genderQuestion =
+  {
+  author: bot,
+  suggestedActions: [
+    {
+      type: "reply",
+      value: "man",
+    },
+    {
+      type: "reply",
+      value: "woman",
+    },
+    {
+      type: "reply",
+      value: "divers",
+    },
+  ],
+  timestamp: new Date(),
+  text: "What is your gender",
+};
+
 const workYearQuestion =
   {
   author: bot,
   timestamp: new Date(),
   text: "In which year did you start to work at the factory?",
+};
+
+const overtimeQuestion =
+  {
+  author: bot,
+  timestamp: new Date(),
+  text: "How much overtime have you worked in the last three months?",
+};
+
+const promoterQuestion =
+  {
+  author: bot,
+  timestamp: new Date(),
+  text: "On a scale from 0 to 10, would you recommend your workplace to a friend? (From 0 = No! to 10 = Yes!)",
 };
 
 const blanco =
@@ -76,7 +137,14 @@ const blanco =
   text: "Oops, something went wrong",
 };
 
-const reply_array_new = [ageQuestion, blanco, safetyQuestion, blanco, workYearQuestion, blanco];
+const thankYou =
+  {
+  author: bot,
+  timestamp: new Date(),
+  text: "Thank you for helping us!",
+};
+
+const reply_array_new = [workYearQuestion, blanco, wageQuestion, blanco, overtimeQuestion, blanco, safetyQuestion, blanco, ageQuestion, blanco, genderQuestion, blanco, promoterQuestion, blanco, thankYou];
 
 
 
@@ -95,7 +163,15 @@ const App = () => {
     }, 1000);
   };
 
-
+  const Toolbar = () => {
+    return (<span>
+            <Slider buttons={false} step={1} defaultValue={5} min={0} max={10}>
+              <SliderLabel position={0}>0</SliderLabel>
+              <SliderLabel position={5}>5</SliderLabel>
+              <SliderLabel position={10}>10</SliderLabel>
+            </Slider>
+          </span>);
+  };
 
   const countReplayLength = (question) => {
     let length = question.length;
@@ -114,6 +190,7 @@ const App = () => {
         placeholder={"Type a message..."}
         width={400}
         showToolbar={true}
+        toolbar={<Toolbar />}
       />
     </div>
   );
