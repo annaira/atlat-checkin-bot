@@ -8,7 +8,6 @@ import {Slider, SliderLabel} from "@progress/kendo-react-inputs";
 const user = {
   id: 1,
   avatarUrl: "https://raw.githubusercontent.com/annaira/atlat-checkin-bot/main/src/atlat-theme/user_avater_100px.png",
-  //avatarUrl: "https://via.placeholder.com/24/008000/008000.png",
 };
 const bot = {
   id: 0,
@@ -146,27 +145,69 @@ const reply_array = [workYearQuestion, blanco, wageQuestion, blanco, overtimeQue
 
 
 
+
 const App = () => {
   const [messages, setMessages] = React.useState(initialMessages);
+  const [showToolbar, setShowToolbar] = React.useState(false);
+  const [sliderValue, setSliderValue] = React.useState(5);
 
   const addNewMessage = (event) => {
     const current_message = (messages.length-1);
+
+    // Check for toolbar
+    if (false) { // this is just the hardstop for the toolbar issue
+    //if (current_message == 12 || current_message == 13) {
+      setShowToolbar(true);
+    } else {
+      setShowToolbar(false);
+    }
+    // Ask next question
     let botResponse = Object.assign({}, event.message);
     botResponse = reply_array[current_message];
-//    botResponse.text = reply_array[(messages.length-1)];
-//    botResponse.author = bot;
     setMessages([...messages, event.message]);
     setTimeout(() => {
       setMessages((oldMessages) => [...oldMessages, botResponse]);
     }, 1000);
   };
 
+  const sliderStyle = {
+    width: '420px'
+  };
+
+  const funcOnChange = (event) => {
+    console.log(event.value);
+    let newSliderValue = event.value | 0 // bitwise or operator for cast to int
+    if (sliderValue != newSliderValue) {
+      setSliderValue(newSliderValue);
+      let sliderResponse = Object.assign({}, event.message);
+      sliderResponse = {
+        author: user,
+        timestamp: new Date(),
+        suggestedActions: [
+          {
+            type: "reply",
+            value: sliderValue.toString(),
+          },
+        ],
+        //text: sliderValue.toString(),
+      };
+      setMessages([...messages, sliderResponse]);
+    };
+  };
+
   const Toolbar = () => {
     return (<span>
-            <Slider buttons={false} step={1} defaultValue={5} min={0} max={10}>
-              <SliderLabel position={0}>0</SliderLabel>
-              <SliderLabel position={5}>5</SliderLabel>
-              <SliderLabel position={10}>10</SliderLabel>
+            <Slider buttons={false} step={1} defaultValue={5} min={0} max={10} style={sliderStyle} onChange={funcOnChange}>
+            {[0, 5, 10].map((value) => (
+              <SliderLabel
+                title={value.toString()}
+                key={value}
+                position={value}
+                onClick={() => {
+                  setSliderValue(value);
+                }}
+              />
+            ))}
             </Slider>
           </span>);
   };
@@ -177,8 +218,6 @@ const App = () => {
     return answer;
   };
 
-
-
   return (
       <Chat
           user={user}
@@ -187,7 +226,7 @@ const App = () => {
           placeholder={"Type a message..."}
           width={"100%"}
           style={{height: "100%", width: "100%", overflow: "hidden"}}
-          showToolbar={true}
+          showToolbar={showToolbar}
           toolbar={<Toolbar/>}
       />
   );
