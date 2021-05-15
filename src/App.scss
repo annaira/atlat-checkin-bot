@@ -1,0 +1,21 @@
+
+$primary: #1b8591;
+$secondary: #5b627c;
+$font-family: Lufga-Light, "Helvetica Neue", sans-serif;
+
+@font-face {
+  font-family: 'Lufga-Light';
+  src: url('atlat-theme/lufga-light.eot');
+  src: url('atlat-theme/lufga-light.eot?#iefix') format('embedded-opentype'),
+  url('atlat-theme/lufga-light.woff2') format('woff2'),
+  url('atlat-theme/lufga-light.woff') format('woff'),
+  url('atlat-theme/lufga-light.ttf') format('truetype'),
+  url('atlat-theme/lufga-light.svg#youworkforthem') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+@import '~@progress/kendo-theme-material/dist/all.scss';
+
+.App {
+  text-align: center;
+}

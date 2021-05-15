@@ -1,9 +1,8 @@
-import React, {Component} from 'react';
+import React from 'react';
 import '@progress/kendo-theme-default/dist/all.css';
-import './App.css';
-import { Chat, HeroCard } from "@progress/kendo-react-conversational-ui";
-import { Calendar } from "@progress/kendo-react-dateinputs";
-import { Slider, SliderLabel } from "@progress/kendo-react-inputs";
+import './App.scss';
+import {Chat} from "@progress/kendo-react-conversational-ui";
+import {Slider, SliderLabel} from "@progress/kendo-react-inputs";
 
 
 const user = {
@@ -180,17 +179,15 @@ const App = () => {
 
 
   return (
-    <div>
       <Chat
         user={user}
         messages={messages}
         onMessageSend={addNewMessage}
         placeholder={"Type a message..."}
-        width={400}
+        width={"100%"}
         showToolbar={true}
         toolbar={<Toolbar />}
       />
-    </div>
   );
 };
 export default App;
