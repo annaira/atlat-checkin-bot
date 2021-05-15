@@ -12,6 +12,7 @@ const user = {
 };
 const bot = {
   id: 0,
+  avatarUrl: "https://raw.githubusercontent.com/annaira/atlat-checkin-bot/main/src/atlat-theme/bot_avatar_100px.png",
 };
 
 
