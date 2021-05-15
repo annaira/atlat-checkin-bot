@@ -3,6 +3,7 @@ import '@progress/kendo-theme-default/dist/all.css';
 import './App.scss';
 import {Chat} from "@progress/kendo-react-conversational-ui";
 import {Slider, SliderLabel} from "@progress/kendo-react-inputs";
+import {Button} from "@progress/kendo-react-buttons";
 
 
 const user = {
@@ -149,14 +150,12 @@ const reply_array = [workYearQuestion, blanco, wageQuestion, blanco, overtimeQue
 const App = () => {
   const [messages, setMessages] = React.useState(initialMessages);
   const [showToolbar, setShowToolbar] = React.useState(false);
-  const [sliderValue, setSliderValue] = React.useState(5);
 
   const addNewMessage = (event) => {
     const current_message = (messages.length-1);
 
     // Check for toolbar
-    if (false) { // this is just the hardstop for the toolbar issue
-    //if (current_message == 12 || current_message == 13) {
+    if (current_message == 12 || current_message == 13) {
       setShowToolbar(true);
     } else {
       setShowToolbar(false);
@@ -171,52 +170,55 @@ const App = () => {
   };
 
   const sliderStyle = {
-    width: '420px'
+    width: '400px',
+    height: '32px'
   };
 
-  const funcOnChange = (event) => {
-    console.log(event.value);
-    let newSliderValue = event.value | 0 // bitwise or operator for cast to int
-    if (sliderValue != newSliderValue) {
-      setSliderValue(newSliderValue);
-      let sliderResponse = Object.assign({}, event.message);
-      sliderResponse = {
-        author: user,
-        timestamp: new Date(),
-        suggestedActions: [
-          {
-            type: "reply",
-            value: sliderValue.toString(),
-          },
-        ],
-        //text: sliderValue.toString(),
-      };
-      setMessages([...messages, sliderResponse]);
+  const buttonStyle = {
+    "margin-left": '10px',
+    "margin-bottom": '20px',
+  }
+
+  const sliderButtonClick = (event) => {
+    let sliderResponse;
+    // Here the logic is missing to access the current value of the slider
+    sliderResponse = {
+      author: user,
+      timestamp: new Date(),
+      text: "Test",
     };
-  };
+    setMessages([...messages, sliderResponse]);
+  }
 
   const Toolbar = () => {
     return (<span>
-            <Slider buttons={false} step={1} defaultValue={5} min={0} max={10} style={sliderStyle} onChange={funcOnChange}>
-            {[0, 5, 10].map((value) => (
-              <SliderLabel
-                title={value.toString()}
-                key={value}
-                position={value}
-                onClick={() => {
-                  setSliderValue(value);
-                }}
-              />
-            ))}
+            <Slider buttons={false} step={1} defaultValue={5} min={0} max={10} style={sliderStyle} >
+            <SliderLabel position={0}>0</SliderLabel>
+            <SliderLabel position={5}>5</SliderLabel>
+            <SliderLabel position={10}>10</SliderLabel>
             </Slider>
+            <Button style={buttonStyle} icon="play" onClick={sliderButtonClick}></Button>
           </span>);
   };
 
-  const countReplayLength = (question) => {
-    let length = question.length;
-    let answer = question + " contains exactly " + length + " symbols.";
-    return answer;
+  // This function checks, if the normal message bar should be displayed
+  const customMessage = (props) => {
+    let result;
+    const current_message = (messages.length-1);
+
+    // Check for toolbar
+    if (current_message == 13 || current_message == 14) {
+      result = (<React.Fragment>
+                </React.Fragment>);
+    } else {
+      result = (<React.Fragment>
+                  {props.messageInput}
+                  {props.sendButton}
+                </React.Fragment>);
+    }
+    return (result);
   };
+
 
   return (
       <Chat
@@ -224,6 +226,7 @@ const App = () => {
           messages={messages}
           onMessageSend={addNewMessage}
           placeholder={"Type a message..."}
+          messageBox={customMessage}
           width={"100%"}
           style={{height: "100%", width: "100%", overflow: "hidden"}}
           showToolbar={showToolbar}
