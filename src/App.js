@@ -180,13 +180,14 @@ const App = () => {
 
   return (
       <Chat
-        user={user}
-        messages={messages}
-        onMessageSend={addNewMessage}
-        placeholder={"Type a message..."}
-        width={"100%"}
-        showToolbar={true}
-        toolbar={<Toolbar />}
+          user={user}
+          messages={messages}
+          onMessageSend={addNewMessage}
+          placeholder={"Type a message..."}
+          width={"100%"}
+          style={{height: "100%", width: "100%", overflow: "hidden"}}
+          showToolbar={true}
+          toolbar={<Toolbar/>}
       />
   );
 };
