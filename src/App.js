@@ -117,7 +117,7 @@ const overtimeQuestion =
   {
   author: bot,
   timestamp: new Date(),
-  text: "How much overtime have you worked in the last three months?",
+  text: "How many hours of overtime have you worked in the last three months?",
 };
 
 const promoterQuestion =
@@ -141,7 +141,31 @@ const thankYou =
   text: "Thank you for helping us!",
 };
 
-const reply_array = [workYearQuestion, blanco, wageQuestion, blanco, overtimeQuestion, blanco, safetyQuestion, blanco, ageQuestion, blanco, genderQuestion, blanco, promoterQuestion, blanco, thankYou];
+const bye =
+  {
+  author: bot,
+  timestamp: new Date(),
+  text: "Goodbye.",
+};
+
+const reply_array = [workYearQuestion,
+   blanco,
+   wageQuestion,
+   blanco,
+   overtimeQuestion,
+   blanco,
+   safetyQuestion,
+   blanco,
+   ageQuestion,
+   blanco,
+   genderQuestion,
+   blanco,
+   promoterQuestion,
+   blanco,
+   thankYou,
+   blanco,
+   bye,
+   blanco];
 
 const App = () => {
   const [messages, setMessages] = React.useState(initialMessages);
@@ -151,7 +175,7 @@ const App = () => {
     const current_message = (messages.length-1);
 
     // Check for toolbar
-    if (current_message === 12 || current_message === 13) {
+    if (current_message === 12) {
       setShowToolbar(true);
     } else {
       setShowToolbar(false);
@@ -186,6 +210,11 @@ const App = () => {
       text: Math.round(value),
     };
     setMessages([...messages, sliderResponse]);
+
+    let botResponse = thankYou;
+    setTimeout(() => {
+      setMessages((oldMessages) => [...oldMessages, botResponse]);
+    }, 1000);
   };
 
   const handleChange = (event) => {
@@ -209,7 +238,7 @@ const App = () => {
     const current_message = (messages.length-1);
 
     // Check for toolbar
-    if (current_message === 13 || current_message === 14) {
+    if (current_message === 13 || current_message === 14 ) {
       result = (<React.Fragment>
                 </React.Fragment>);
     } else {
