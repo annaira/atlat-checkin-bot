@@ -232,7 +232,7 @@ const App = () => {
 
   const Toolbar = () => {
     return (<span>
-            <Slider buttons={false} step={1} defaultValue={5} min={0} max={10} style={sliderStyle} onChange={handleChange} >
+            <Slider buttons={false} step={1} value={5} min={0} max={10} style={sliderStyle} onChange={handleChange} >
             <SliderLabel position={0}>0</SliderLabel>
             <SliderLabel position={5}>5</SliderLabel>
             <SliderLabel position={10}>10</SliderLabel>
