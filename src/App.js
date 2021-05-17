@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import '@progress/kendo-theme-default/dist/all.css';
 import './App.scss';
 import {Chat} from "@progress/kendo-react-conversational-ui";
@@ -151,7 +151,7 @@ const App = () => {
     const current_message = (messages.length-1);
 
     // Check for toolbar
-    if (current_message == 12 || current_message == 13) {
+    if (current_message === 12 || current_message === 13) {
       setShowToolbar(true);
     } else {
       setShowToolbar(false);
@@ -175,16 +175,22 @@ const App = () => {
     "margin-bottom": '20px',
   }
 
+  const [value, setValue] = useState(5);
+
   const sliderButtonClick = (event) => {
     let sliderResponse;
-    // Here the logic is missing to access the current value of the slider
+
     sliderResponse = {
       author: user,
       timestamp: new Date(),
-      text: "Test",
+      text: Math.round(value),
     };
     setMessages([...messages, sliderResponse]);
-  }
+  };
+
+  const handleChange = (event) => {
+    setValue(event.value);
+  };
 
   const Toolbar = () => {
     return (<span>
@@ -203,7 +209,7 @@ const App = () => {
     const current_message = (messages.length-1);
 
     // Check for toolbar
-    if (current_message == 13 || current_message == 14) {
+    if (current_message === 13 || current_message === 14) {
       result = (<React.Fragment>
                 </React.Fragment>);
     } else {
@@ -224,6 +230,8 @@ const App = () => {
           placeholder={"Type a message..."}
           messageBox={customMessage}
           width={"100%"}
+          showToolbar={showToolbar}
+          toolbar={<Toolbar/>}
           style={{height: "100%", width: "100%", overflow: "hidden"}}
       />
   );
