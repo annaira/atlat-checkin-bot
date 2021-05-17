@@ -180,6 +180,7 @@ const App = () => {
     } else {
       setShowToolbar(false);
     }
+
     // Ask next question
     let botResponse = Object.assign({}, event.message);
     botResponse = reply_array[current_message];
@@ -195,8 +196,8 @@ const App = () => {
   };
 
   const buttonStyle = {
-    "margin-left": '10px',
-    "margin-bottom": '20px',
+    "marginLeft": '10px',
+    "marginBottom": '20px',
   }
 
   const [value, setValue] = useState(5);
@@ -211,6 +212,14 @@ const App = () => {
     };
     setMessages([...messages, sliderResponse]);
 
+    // Check for toolbar
+    const current_message = (messages.length-1);
+    if (current_message === 12) {
+      setShowToolbar(true);
+    } else {
+      setShowToolbar(false);
+    }
+
     let botResponse = thankYou;
     setTimeout(() => {
       setMessages((oldMessages) => [...oldMessages, botResponse]);
@@ -223,7 +232,7 @@ const App = () => {
 
   const Toolbar = () => {
     return (<span>
-            <Slider buttons={false} step={1} defaultValue={5} min={0} max={10} style={sliderStyle} >
+            <Slider buttons={false} step={1} defaultValue={5} min={0} max={10} style={sliderStyle} onChange={handleChange} >
             <SliderLabel position={0}>0</SliderLabel>
             <SliderLabel position={5}>5</SliderLabel>
             <SliderLabel position={10}>10</SliderLabel>
@@ -249,7 +258,6 @@ const App = () => {
     }
     return (result);
   };
-
 
   return (
       <Chat
