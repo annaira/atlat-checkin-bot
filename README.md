@@ -70,10 +70,12 @@ We are a social startup invested in improving working conditions for the workers
 * [Create React App](https://github.com/facebook/create-react-app)
 
 ### Usage
-The conversational UI for the chatbot provides a low threshold way for workers 
+The conversational UI for the chatbot provides a low threshold way for workers.
+
 [![Bot Overview][product-screenshot_1]](https://atlat-checkin-bot.herokuapp.com/)
 
 Chiplets make it even easier to answer.
+
 [![Chiplet Answers][product-screenshot_2]](https://atlat-checkin-bot.herokuapp.com/)
 
 
